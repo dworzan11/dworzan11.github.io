@@ -1,0 +1,35 @@
+<html>
+
+<body>
+    <div style="text-align:center">
+        <canvas width="600" height="400" id="canvas" style="border:1px solid #c3c3c3;">
+        </canvas>
+    </div>
+    <div style="display: flex;">
+        <div>
+            <p>Red</p>
+            <input id="r" type="range" min="0" max="255" value="255"></input>
+            <p>Green</p>
+            <input id="g" type="range" min="0" max="255" value="0"></input>
+            <p>Blue</p>
+            <input id="b" type="range" min="0" max="255" value="0"></input>
+        </div>
+        <div>
+            <p>X</p>
+            <input id="translateX" type="range" min="-300" max="300" value="0"></input>
+            <p>Y</p>
+            <input id="translateY" type="range" min="-200" max="200" value="0"></input>
+            <p>Z</p>
+            <input id="translateZ" type="range" min="-100" max="99" value="0"></input>
+        </div>
+        <div>
+            <p>Rotate</p>
+            <input id="rotate" type="range" min="0" max="360" value="0"></input>
+        </div>
+    </div>
+
+
+    <script src="hilbertWebGL.js" id="s"></script>
+</body>
+
+</html>
