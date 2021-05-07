@@ -1,0 +1,231 @@
+<head>
+    <title>Radoszne Bingo</title>
+    <style>
+        body  {
+            background-image: url("radosznyobrazek.png");
+            background-color: #cccccc;
+            background-size: 10%;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        .rowbutton {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 16%;
+            flex-grow: 1;
+        }
+
+        .buttona {
+            width: 20%;
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 15px 25px;
+            /* font-size: 24px; */
+            font-size: 1vmax;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+        
+        .buttona:hover {background-color: #3e8e41}
+        
+        .buttona:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .buttonna {
+            width: 20%;
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 15px 25px;
+            /* font-size: 24px; */
+            font-size: 1vmax;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #c55123;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+        
+        .buttonna:hover {background-color: #773116}
+        
+        .buttonna:active {
+            background-color: #773116;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .buttonrel {
+            width: 20%;
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 15px 25px;
+            /* font-size: 24px; */
+            font-size: 2vmax;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #2a92e7;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+        
+        .buttonrel:hover {background-color: #226daa}
+        
+        .buttonrel:active {
+            background-color: #226daa;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+    
+    <script>
+        var active = Array(25).fill(false)
+        var textst = ["HALO???","Radosz spóźnia się na wykład","Radosza wywala z wykładu","Radoszowi usuwają się notatki, które przygotował sobie wcześniej","CZY PAŃSTWO MNIE SŁYSZYCIE?","CZY JEST Z NAMI PAN DAWID???","Telefon dzwoni na wykładzie","Radosz się bulwersuje, bo nie ma pytań","*Radoszowe dźwięki frustracji*","Milion randomowych strzałek przy wykresie","Radosz rysuje nieczytelny rysunek","Nie słychać Radosza/On nie słyszy nas","Radosz w ogóle nie pojawia się na wykładzie","Proszę wyciszyć mikrofony","Radosz sprawdza ilość uczestników i mówi jaki to procent 48","PROSZĘ PODAĆ IMIĘ","Radosza nie widać, ale słychać jak oddycha","Kozak moment na wykładzie","Radosz narzeka na tablicę/swoje pismo","TAK NIE MOŻE BYĆ ...","Radosz rzuca jakąś głęboką sentencją, np. \"no pain, no gain\"","Zajęcia się rozpoczęły, ale prowadzącego nie ma","Komuś zaszczeka pies w tle, a Radosz pyta się go, jak ma na imię","Pada słowo \"beznadziejnie\"","Radosz określa zagadnienie jako \"trywialne\""]
+        var permutation = []
+        window.onload = load;
+
+        function load()
+        {
+            log = localStorage.getItem("login")
+            if(log!=null) {
+                document.getElementById("login").remove()
+                document.getElementById("all").style.visibility = "visible"
+            }
+            var p = localStorage.getItem("permutation")
+            if(p == null) {
+                var num = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+                i=0
+                while(num.length > 0) {
+                    idx = Math.floor(Math.random()*num.length)
+                    permutation.push(num[idx])
+                    document.getElementById(i).innerHTML = textst[num[idx]]
+                    num.splice(idx,1)
+                    i++
+                }
+                localStorage.setItem("permutation",JSON.stringify(permutation))
+                localStorage.setItem("active",JSON.stringify(active))
+            } else {
+                permutation = JSON.parse(p)
+                active = JSON.parse(localStorage.getItem("active"))
+                for(var i = 0; i < 25; i++) {
+                    document.getElementById(i).innerHTML = textst[permutation[i]]
+                    if(active[i]) {
+                        document.getElementById(i).classList.toggle("buttonna")
+                        document.getElementById(i).classList.toggle("buttona")
+                    }
+                }
+            }
+            
+        }
+        function changeActive(id) {
+            active[id]=!active[id]
+            localStorage.setItem("active",JSON.stringify(active))
+            document.getElementById(id).classList.toggle("buttonna")
+            document.getElementById(id).classList.toggle("buttona")
+        }
+        function reload() {
+            permutation = []
+            var num = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+            i=0
+            while(num.length > 0) {
+                idx = Math.floor(Math.random()*num.length)
+                permutation.push(num[idx])
+                document.getElementById(i).innerHTML = textst[num[idx]]
+                num.splice(idx,1)
+                i++
+            }
+            for(var j = 0; j < 25; j++) {
+                if(active[j]) {
+                    document.getElementById(j).classList.toggle("buttonna")
+                    document.getElementById(j).classList.toggle("buttona")
+                }
+            }
+            active = Array(25).fill(false)
+            localStorage.setItem("permutation",JSON.stringify(permutation))
+            localStorage.setItem("active",JSON.stringify(active))
+        }
+        function trypass() {
+            if((event.type=="keydown"&&event.keyCode == 13)||event.type=="click") {
+                if(document.getElementById("pass").value == "kwantowka") {
+                    localStorage.setItem("login",true)
+                    document.getElementById("login").remove()
+                    document.getElementById("all").style.visibility = "visible"
+                } else {
+                    document.getElementById("zle").style.visibility = "visible"
+                }
+            }
+        }
+    </script>
+
+    <div id="login">
+        <div>
+            <input id="pass" type="password" onkeydown="trypass()" style="display: block; margin-left: auto; margin-right: auto; width: 25%;text-align: center;" />
+        </div>
+        <div>
+            <button onclick="trypass()" style="display: block; margin-left: auto; margin-right: auto;" class="buttonrel">Login</button>
+        </div>
+        <div id="zle" style="visibility: hidden;">
+            <h1 style="display: block; margin-left: auto; margin-right: auto; color: red;width: 25%;text-align: center;">Źłe hasło</h1>
+        </div>
+    </div>
+    <div id = "all" style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; height: 95%; visibility: hidden;">
+        <div class="rowbutton">
+            <button id="0" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="1" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="2" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="3" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="4" onclick="changeActive(this.id)" class="buttonna"></button>
+        </div>
+        <div class="rowbutton">
+            <button id="5" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="6" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="7" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="8" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="9" onclick="changeActive(this.id)" class="buttonna"></button>
+        </div>
+        <div class="rowbutton">
+            <button id="10" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="11" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="12" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="13" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="14" onclick="changeActive(this.id)" class="buttonna"></button>
+        </div>
+        <div class="rowbutton">
+            <button id="15" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="16" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="17" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="18" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="19" onclick="changeActive(this.id)" class="buttonna"></button>
+        </div>
+        <div class="rowbutton">
+            <button id="20" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="21" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="22" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="23" onclick="changeActive(this.id)" class="buttonna"></button>
+            <button id="24" onclick="changeActive(this.id)" class="buttonna"></button>
+        </div>
+        <div class="rowbutton">
+            <button onclick="reload()" class="buttonrel">Zmień</button>
+        </div>
+
+    </div>
+</body>
